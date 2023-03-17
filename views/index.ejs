@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Streaming Website</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+  text-align: center;
+  background-image: url('http://localhost:3000/friends.jpg');
+  background-size: cover;
+  background-position: center;
+  font-family: sans-serif;
+}
+
+#video-title {
+  margin-top: 50px;
+  font-size: 36px;
+  color: #fff;
+  text-shadow: 1px 1px #333;
+}
+
+video {
+  width: 80%;
+  max-width: 720px;
+  height: auto;
+  border: 10px solid #fff;
+  box-shadow: 0 0 20px #333;
+  margin: 50px auto;
+}
+
+  </style>
+</head>
+<body>
+  <h1 id="video-title"></h1>
+  <video id="player" controls autoplay>
+    <% videoFiles.forEach(function(video) { %>
+      <source src="<%= video.file %>" type="video/mp4">
+    <% }); %>
+  </video>
+
+  <script>
+    const player = document.getElementById('player');
+    const videoTitle = document.getElementById('video-title');
+    const videoFiles = <%- JSON.stringify(videoFiles) %>;
+
+    let currentVideo = 0;
+    player.addEventListener('ended', function() {
+      currentVideo = (currentVideo + 1) % videoFiles.length;
+      player.src = videoFiles[currentVideo].file;
+      videoTitle.innerHTML = videoFiles[currentVideo].name;
+      player.load();
+      player.play();
+    });
+
+    videoTitle.innerHTML = videoFiles[currentVideo].name;
+  </script>
+</body>
+</html>
