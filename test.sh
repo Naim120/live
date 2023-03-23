@@ -4,5 +4,5 @@ tar -xf ffmpeg_5.1.1.orig.tar.xz
 cd ffmpeg_5.1.1
 ./configure
 make
-make install
+sudo make install
 ffmpeg --version
